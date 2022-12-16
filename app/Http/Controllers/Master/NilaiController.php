@@ -15,7 +15,7 @@ class NilaiController extends Controller
      */
     public function index()
     {
-        $nilai = Nilai::orderBy('id', 'DESC')->get();
+        $nilai = Nilai::get();
         return view('pages.nilai.index', compact('nilai'));
     }
 
