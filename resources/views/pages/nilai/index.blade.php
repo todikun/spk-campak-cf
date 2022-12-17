@@ -27,9 +27,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{route('nilai.create')}}" class="btn btn-primary mb-3 btn-add">
+
+                    {{-- <a href="{{route('nilai.create')}}" class="btn btn-primary mb-3 btn-add">
                         <i class="align-middle" data-feather="plus"></i>
-                    </a>
+                    </a> --}}
+
                     <table class="table">
                         <thead>
                             <tr>
@@ -44,7 +46,7 @@
 
                         <tbody class="table-group-divider">
                             @forelse ($nilai as $item)
-                            <tr>
+                            <tr class="{{$item->total == 0 ? 'alert alert-danger' : ''}}">
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->gejala->nama}}</td>
                                 <td>{{$item->penyakit->nama}}</td>
@@ -52,19 +54,11 @@
                                 <td>{{$item->cf_pasien}}</td>
                                 <td>
 
-                                    <a href="{{route('nilai.edit', $item->id)}}"
+                                    <a href=" {{route('nilai.edit', $item->id)}}"
                                         class="btn btn-xs btn-edit btn-warning">
                                         <i class="align-middle" data-feather="edit"></i>
                                     </a>
 
-                                    <form action="{{route('nilai.destroy', $item->id)}}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-xs btn-danger"
-                                            onclick="return confirm('Apakah data ini akan dihapus?')">
-                                            <i class="align-middle" data-feather="trash"></i>
-                                        </button>
-                                    </form>
                                 </td>
                             </tr>
                             @empty
@@ -95,7 +89,7 @@
             dataType: 'HTML',
             method: 'GET',
             success: function (result) {
-                $('#modal-form').find('#modal-label').html('Edit Nagari');
+                $('#modal-form').find('#modal-label').html('Edit Nilai CF');
                 $('#modal-form').find('.modal-body').html(result);
                 $('#modal-form').modal('show');
             },

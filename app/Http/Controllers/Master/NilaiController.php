@@ -76,7 +76,10 @@ class NilaiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $gejala = Gejala::get();
+        $penyakit = Penyakit::get();
+        $nilai = Nilai::find($id);
+        return view('pages.nilai.edit', compact('gejala', 'penyakit', 'nilai'));
     }
 
     /**
@@ -88,7 +91,23 @@ class NilaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'penyakitid' => 'required',
+            'gejalaid' => 'required',
+            'cf_pakar' => 'required|numeric',
+            'cf_pasien' => 'required|numeric',
+        ]);
+
+        $nilai = Nilai::find($id);
+        $nilai->update([
+            'penyakitid' => $request->penyakitid,
+            'gejalaid' => $request->gejalaid,
+            'cf_pakar' => $request->cf_pakar,
+            'cf_pasien' => $request->cf_pasien,
+            'total' => $request->cf_pakar * $request->cf_pasien,
+        ]);
+
+        return back()->with('success', 'Data berhasil diupdate!');
     }
 
     /**
