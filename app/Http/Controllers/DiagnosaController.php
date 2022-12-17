@@ -15,17 +15,23 @@ class DiagnosaController extends Controller
 
     public function diagnosa(Request $request)
     {
-        $tempPenyakit = array();
-        $penyakit = array();
-        $total = array();
-        $combine = array();
-        $result = array();
-
-        $tempCombine = array();
+        // campak bayi
+        $tempCombineBayi = array();
         $campakBayi = array();
+        $combineBayi = 0;
+        
+        // rubeola
+        $tempCombineRubeola = array();
         $rubeola = array();
-        $rubella = array();
+        $combineRubeolaBayi = 0;
 
+        // rubella
+        $tempCombineRubella = array();
+        $rubella = array();
+        $combineRubella = 0;
+
+        $result = array();
+        
         if (!$request->gejala || sizeof($request->gejala) == 1) {
             return 'Penyakit tidak diketahui, karena informasi gejala kurang!';
         } else {
@@ -35,13 +41,10 @@ class DiagnosaController extends Controller
                 $tempRubeola = Nilai::where('gejalaid', $gejala)->where('penyakitid', 2)->first();
                 $tempRubella = Nilai::where('gejalaid', $gejala)->where('penyakitid', 3)->first();
                 
+                // masukan ke temp
                 $tempCampakBayi != null ? array_push($campakBayi, $tempCampakBayi) : null;
                 $tempRubeola != null ? array_push($rubeola, $tempRubeola) : null;
                 $tempRubella != null ? array_push($rubella, $tempRubella) : null;
-                
-                // ambil total
-                $gejala = Gejala::find($gejala);
-                array_push($total, $gejala->nilai->total);
             }
         }
 
@@ -49,31 +52,30 @@ class DiagnosaController extends Controller
         // dd(sizeof($campakBayi));
 
         if (sizeof($campakBayi) == 2) {
-            $combine = $campakBayi[0]['total'] + $campakBayi[1]['total'] * (1 - $campakBayi[0]['total']);
-        } else {
+            $tempCombine = $campakBayi[0]['total'] + $campakBayi[1]['total'] * (1 - $campakBayi[0]['total']);
+            array_push($tempCombineBayi, $tempCombine);
+        } else if (sizeof($campakBayi) > 2) {
             $index = 1;
             for ($i = 0; $i < sizeof($campakBayi); $i++) {
                 if ($i == 0) {
-                    $tempCombineAwal = $campakBayi[0]['total'] + $campakBayi[1]['total'] * (1 - $campakBayi[0]['total']);
-                    // array_push($tempCombineAwal, $tempCombine);
-                    // dd($tempCombineAwal);
+                    $tempCombine = $campakBayi[0]['total'] + $campakBayi[1]['total'] * (1 - $campakBayi[0]['total']);
+                    array_push($tempCombineBayi, $tempCombine);
                 } else {
                     if ($i == 1) {
-                        $tempCombineNext = $campakBayi[2]['total'] + $tempCombineAwal * (1 - $campakBayi[2]['total']);
+                        $tempCombine = $campakBayi[2]['total'] + $tempCombineBayi[0] * (1 - $campakBayi[2]['total']);
                         // dd($campakBayi[$index]['total']);
-                        array_push($tempCombine, $tempCombineNext);
-                        // dd($tempCombineNext);
+                        array_push($tempCombineBayi, $tempCombine);
+                        // dd($tempCombine);
                     } else {
-
                         // cek kalo udah kondisi terkahir langsung berhenti looping
                         if ($i + 1 == sizeof($campakBayi)) {
                             break;
                         }
                         
-                        $tempCombineNext = $campakBayi[2 + $index]['total'] + $tempCombine[sizeof($tempCombine) - 1] * (1 - $campakBayi[2 + $index]['total']);
+                        $tempCombine = $campakBayi[2 + $index]['total'] + $tempCombineBayi[sizeof($tempCombineBayi) - 1] * (1 - $campakBayi[2 + $index]['total']);
                         
-                        array_push($tempCombine, $tempCombineNext);
-                        array_push($combine, $tempCombineNext);
+                        array_push($tempCombineBayi, $tempCombine);
+                        $combineBayi = $tempCombineBayi[sizeof($tempCombineBayi) - 1];
                         $index++;
                     }
                 }
@@ -81,11 +83,10 @@ class DiagnosaController extends Controller
             
         }
 
-        // dd($tempCombine);
-        dd($combine);
+        dd($tempCombineBayi);
+        
         // dd(0.60 + 0.8176 * (1 - 0.60));
         // dd($tempCombine);
-        // dd($tempCombineNext);
         
     }
 }
