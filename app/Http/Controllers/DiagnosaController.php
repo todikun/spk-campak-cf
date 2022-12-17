@@ -21,6 +21,7 @@ class DiagnosaController extends Controller
         $combine = array();
         $result = array();
 
+        $tempCombine = array();
         $campakBayi = array();
         $rubeola = array();
         $rubella = array();
@@ -44,59 +45,48 @@ class DiagnosaController extends Controller
             }
         }
 
-        // dd($campakBayi[1]['total'], $rubeola ,$rubella);
+        // dd($campakBayi[2], $rubeola ,$rubella);
         // dd(sizeof($campakBayi));
 
         if (sizeof($campakBayi) == 2) {
             $combine = $campakBayi[0]['total'] + $campakBayi[1]['total'] * (1 - $campakBayi[0]['total']);
         } else {
-            $index = 0;
+            $index = 1;
             for ($i = 0; $i < sizeof($campakBayi); $i++) {
                 if ($i == 0) {
                     $tempCombineAwal = $campakBayi[0]['total'] + $campakBayi[1]['total'] * (1 - $campakBayi[0]['total']);
                     // array_push($tempCombineAwal, $tempCombine);
                     // dd($tempCombineAwal);
-                } else if ($i > 1) {
-                    $tempCombineNext = $campakBayi[$index]['total'] + $tempCombineAwal * (1 - $campakBayi[$index]['total']);
-                    array_push($combine, $tempCombineNext);
-                    $index++;
+                } else {
+                    if ($i == 1) {
+                        $tempCombineNext = $campakBayi[2]['total'] + $tempCombineAwal * (1 - $campakBayi[2]['total']);
+                        // dd($campakBayi[$index]['total']);
+                        array_push($tempCombine, $tempCombineNext);
+                        // dd($tempCombineNext);
+                    } else {
+
+                        // cek kalo udah kondisi terkahir langsung berhenti looping
+                        if ($i + 1 == sizeof($campakBayi)) {
+                            break;
+                        }
+                        
+                        $tempCombineNext = $campakBayi[2 + $index]['total'] + $tempCombine[sizeof($tempCombine) - 1] * (1 - $campakBayi[2 + $index]['total']);
+                        
+                        array_push($tempCombine, $tempCombineNext);
+                        array_push($combine, $tempCombineNext);
+                        $index++;
+                    }
                 }
             }
             
         }
+
+        // dd($tempCombine);
         dd($combine);
+        // dd(0.60 + 0.8176 * (1 - 0.60));
+        // dd($tempCombine);
         // dd($tempCombineNext);
-
-
-        // hapus penyakit id yg sama
-        array_push($penyakit, array_unique($tempPenyakit));
-
-        // rumus
-        for ($i = 0; $i < sizeof($penyakit); $i++) { 
-            $tempCombine = array();
-            for ($j = 0; $j < sizeof($request->gejala); $j++) { 
-                if (sizeof($total) == 2) {
-                    $combine = $total[$j] + $total[$j++] * (1 - $total[$j]);
-                } else {
-                    if ($j < 1) {
-                        $combine = $total[0] + $total[1] * (1 - $total[$j]);
-                        array_push($tempCombine, $combine);
-                    } else {
-
-                    }
-                }
-            }
-
-            $kodePenyakit = Penyakit::find($penyakit[$i]);
-            array_push($result, array(
-                'kode' => $kodePenyakit[0]['kode'],
-                'nama' => $kodePenyakit[0]['nama'],
-                'kepercayaan' => $combine * 100,
-            ));
-        }
-
-
-        // dd($result);
+        
     }
 }
 
