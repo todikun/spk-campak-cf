@@ -23,7 +23,7 @@ class DiagnosaController extends Controller
         // rubeola
         $tempCombineRubeola = array();
         $rubeola = array();
-        $combineRubeolaBayi = 0;
+        $combineRubeola = 0;
 
         // rubella
         $tempCombineRubella = array();
@@ -54,17 +54,20 @@ class DiagnosaController extends Controller
         if (sizeof($campakBayi) == 2) {
             $tempCombine = $campakBayi[0]['total'] + $campakBayi[1]['total'] * (1 - $campakBayi[0]['total']);
             array_push($tempCombineBayi, $tempCombine);
+            $combineBayi = $tempCombineBayi[sizeof($tempCombineBayi) - 1];
         } else if (sizeof($campakBayi) > 2) {
             $index = 1;
             for ($i = 0; $i < sizeof($campakBayi); $i++) {
                 if ($i == 0) {
                     $tempCombine = $campakBayi[0]['total'] + $campakBayi[1]['total'] * (1 - $campakBayi[0]['total']);
                     array_push($tempCombineBayi, $tempCombine);
+                    $combineBayi = $tempCombineBayi[sizeof($tempCombineBayi) - 1];
                 } else {
                     if ($i == 1) {
                         $tempCombine = $campakBayi[2]['total'] + $tempCombineBayi[0] * (1 - $campakBayi[2]['total']);
                         // dd($campakBayi[$index]['total']);
                         array_push($tempCombineBayi, $tempCombine);
+                        $combineBayi = $tempCombineBayi[sizeof($tempCombineBayi) - 1];
                         // dd($tempCombine);
                     } else {
                         // cek kalo udah kondisi terkahir langsung berhenti looping
@@ -83,6 +86,7 @@ class DiagnosaController extends Controller
             
         }
 
+        // dd($combineBayi);
         dd($tempCombineBayi);
         
         // dd(0.60 + 0.8176 * (1 - 0.60));
