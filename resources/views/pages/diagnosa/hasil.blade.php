@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Penyakit')
+@section('title', 'Hasil Diagnosa')
 
 @section('content')
 <div class="container-fluid p-0">
@@ -21,52 +21,45 @@
     </div>
     @endif
 
-    <h1 class="h3 mb-3">Semua Data Gejala</h1>
+    <h1 class="h3 mb-3">Hasil Diagnosa</h1>
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    {{-- <a href="{{route('gejala.create')}}" class="btn btn-primary mb-3 btn-add">
-                        <i class="align-middle" data-feather="plus"></i>
-                    </a> --}}
+
+                    <a href="{{route('diagnosa.laporan', ['data' => $result])}}" target="_blank"
+                        class="btn btn-primary mb-3">Cetak</i>
+                    </a>
+
                     <table class="table">
                         <thead>
                             <tr>
                                 <td colspan="1%">#</td>
-                                <td>Kode</td>
-                                <td width="50%">Nama</td>
-                                <td>Action</td>
+                                <td>Penyakit</td>
+                                <td>Kepercayaan</td>
+                                <td width="20%">Action</td>
                             </tr>
                         </thead>
 
                         <tbody class="table-group-divider">
-                            @forelse ($gejala as $item)
+                            @foreach ($result as $item)
+                            @if ($item['kepercayaan'] != 0)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{$item->kode}}</td>
-                                <td>{{$item->nama}}</td>
+                                <td>{{$item['nama']}}</td>
+                                <td>{{$item['kepercayaan']}}%</td>
                                 <td>
 
-                                    <a href="{{route('gejala.edit', $item->id)}}"
-                                        class="btn btn-xs btn-edit btn-warning">
-                                        <i class="align-middle" data-feather="edit"></i>
+                                    <a href="{{route('diagnosa.detail', ['id' => $item['id']])}}"
+                                        class="btn btn-xs btn-detail btn-secondary">
+                                        <i class="align-middle" data-feather="eye"></i>
                                     </a>
 
-                                    {{-- <form action="{{route('gejala.destroy', $item->id)}}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-xs btn-danger"
-                                            onclick="return confirm('Apakah data ini akan dihapus?')">
-                                            <i class="align-middle" data-feather="trash"></i>
-                                        </button>
-                                    </form> --}}
                                 </td>
                             </tr>
-                            @empty
-                            <td colspan="50%" class="text-center">No data</td>
-                            @endforelse
+                            @endif
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -74,8 +67,6 @@
         </div>
     </div>
 </div>
-
-
 
 @endsection
 
@@ -92,7 +83,7 @@
             dataType: 'HTML',
             method: 'GET',
             success: function (result) {
-                $('#modal-form').find('#modal-label').html('Edit Nagari');
+                $('#modal-form').find('#modal-label').html('Edit Diagnosa');
                 $('#modal-form').find('.modal-body').html(result);
                 $('#modal-form').modal('show');
             },
@@ -112,7 +103,7 @@
             dataType: 'HTML',
             method: 'GET',
             success: function (result) {
-                $('#modal-form').find('#modal-label').html('Add Nagari');
+                $('#modal-form').find('#modal-label').html('Add Diagnosa');
                 $('#modal-form').find('.modal-body').html(result);
                 $('#modal-form').modal('show');
             },
@@ -132,7 +123,7 @@
             dataType: 'HTML',
             method: 'GET',
             success: function (result) {
-                $('#modal-form').find('#modal-label').html('Detail Nagari');
+                $('#modal-form').find('#modal-label').html('Detail Diagnosa');
                 $('#modal-form').find('.modal-body').html(result);
                 $('#modal-form').modal('show');
             },

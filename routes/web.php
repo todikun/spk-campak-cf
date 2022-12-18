@@ -27,6 +27,8 @@ Route::get('/dashboard', function () {
 
 Route::get('diagnosa', [DiagnosaController::class, 'index'])->name('diagnosa.index');
 Route::post('diagnosa', [DiagnosaController::class, 'diagnosa'])->name('diagnosa.store');
+Route::get('diagnosa/detail', [DiagnosaController::class, 'detail'])->name('diagnosa.detail');
+Route::get('diagnosa/laporan', [DiagnosaController::class, 'laporan'])->name('diagnosa.laporan');
 
 Route::resource('penyakit', PenyakitController::class);
 Route::resource('gejala', GejalaController::class);

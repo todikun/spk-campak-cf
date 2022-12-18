@@ -6,6 +6,13 @@
 
 <div class="container-fluid p-0">
 
+    @if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{session('error')}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
     <h1 class="h3 mb-3">Pilih Gejala</h1>
     <div class="row">
         <div class="col-12">

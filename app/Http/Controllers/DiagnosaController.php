@@ -15,20 +15,16 @@ class DiagnosaController extends Controller
 
     public function diagnosa(Request $request)
     {
-        // campak bayi
         $campakBayi = array();
-        
-        // rubeola
         $rubeola = array();
-
-        // rubella
         $rubella = array();
+        $result = array();
 
         if (!$request->gejala || sizeof($request->gejala) == 1) {
-            return 'Penyakit tidak diketahui, karena informasi gejala kurang!';
+            return back()->with('error', 'Penyakit tidak diketahui, karena informasi gejala kurang!');
         } else {
             foreach ($request->gejala as $gejala) {
-                // ambil id penyakit
+                // ambil penyakit by gejala
                 $tempCampakBayi = Nilai::where('gejalaid', $gejala)->where('penyakitid', 1)->first();
                 $tempRubeola = Nilai::where('gejalaid', $gejala)->where('penyakitid', 2)->first();
                 $tempRubella = Nilai::where('gejalaid', $gejala)->where('penyakitid', 3)->first();
@@ -41,21 +37,28 @@ class DiagnosaController extends Controller
         }
         
         $resultBayi = array(
+            'id' => 1,
             'nama' => 'Campak Bayi atau Roseola Infantum',
             'kepercayaan' => $this->rumus($campakBayi),
         );
 
         $resultRubeola = array(
+            'id' => 2,
             'nama' => 'Campak Rubeola',
             'kepercayaan' => $this->rumus($rubeola),
         );
 
         $resultRubella = array(
+            'id' => 3,
             'nama' => 'Campak Rubella',
             'kepercayaan' => $this->rumus($rubella),
         );
 
-        dd($resultBayi, $resultRubeola, $resultRubella);
+        $result = array(
+            $resultBayi, $resultRubeola, $resultRubella,
+        );
+
+        return view('pages.diagnosa.hasil', compact('result'));
         
     }
 
@@ -78,10 +81,9 @@ class DiagnosaController extends Controller
                 } else {
                     if ($i == 1) {
                         $tempCombine = $data[2]['total'] + $combine[0] * (1 - $data[2]['total']);
-                        // dd($data[$index]['total']);
+                        
                         array_push($combine, $tempCombine);
                         $result = $combine[sizeof($combine) - 1];
-                        // dd($tempCombine);
                     } else {
                         // cek kalo udah kondisi terkahir langsung berhenti looping
                         if ($i + 1 == sizeof($data)) {
@@ -100,6 +102,19 @@ class DiagnosaController extends Controller
         }
 
         return $result * 100;
+    }
+
+    public function detail()
+    {
+        $id = request()->get('id');
+        $penyakit = Penyakit::find($id);
+        return view('pages.diagnosa.detail', compact('penyakit'));
+    }
+
+    public function laporan()
+    {
+        $data = request()->get('data');
+        return view('pages.diagnosa.laporan', compact('data'));
     }
 
 }

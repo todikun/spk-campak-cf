@@ -65,7 +65,7 @@ class NilaiController extends Controller
      */
     public function show($id)
     {
-        //
+        return abort(403);
     }
 
     /**
@@ -118,6 +118,6 @@ class NilaiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return abort(403);
     }
 }

@@ -27,9 +27,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{route('penyakit.create')}}" class="btn btn-primary mb-3 btn-add">
+                    {{-- <a href="{{route('penyakit.create')}}" class="btn btn-primary mb-3 btn-add">
                         <i class="align-middle" data-feather="plus"></i>
-                    </a>
+                    </a> --}}
                     <table class="table">
                         <thead>
                             <tr>
@@ -57,7 +57,7 @@
                                         <i class="align-middle" data-feather="edit"></i>
                                     </a>
 
-                                    <form action="{{route('penyakit.destroy', $item->id)}}" method="POST"
+                                    {{-- <form action="{{route('penyakit.destroy', $item->id)}}" method="POST"
                                         class="d-inline">
                                         @csrf
                                         @method('DELETE')
@@ -65,7 +65,7 @@
                                             onclick="return confirm('Apakah data ini akan dihapus?')">
                                             <i class="align-middle" data-feather="trash"></i>
                                         </button>
-                                    </form>
+                                    </form> --}}
                                 </td>
                             </tr>
                             @empty
