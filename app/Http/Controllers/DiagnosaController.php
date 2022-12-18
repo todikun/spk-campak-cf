@@ -37,16 +37,19 @@ class DiagnosaController extends Controller
         }
         
         $resultBayi = array(
+            'id' => 1,
             'nama' => 'Campak Bayi atau Roseola Infantum',
             'kepercayaan' => $this->rumus($campakBayi),
         );
 
         $resultRubeola = array(
+            'id' => 2,
             'nama' => 'Campak Rubeola',
             'kepercayaan' => $this->rumus($rubeola),
         );
 
         $resultRubella = array(
+            'id' => 3,
             'nama' => 'Campak Rubella',
             'kepercayaan' => $this->rumus($rubella),
         );
