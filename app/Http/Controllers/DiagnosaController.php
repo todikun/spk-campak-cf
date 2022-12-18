@@ -15,9 +15,6 @@ class DiagnosaController extends Controller
 
     public function diagnosa(Request $request)
     {
-        $tempCampakBayi = array();
-        $tempRubeola = array();
-        $tempRubella = array();
         $campakBayi = array();
         $rubeola = array();
         $rubella = array();
@@ -40,20 +37,17 @@ class DiagnosaController extends Controller
         }
         
         $resultBayi = array(
-            'id' => $tempCampakBayi->id ?? '',
-            'nama' => $tempCampakBayi->penyakit->nama ?? '',
+            'nama' => 'Campak Bayi atau Roseola Infantum',
             'kepercayaan' => $this->rumus($campakBayi),
         );
 
         $resultRubeola = array(
-            'id' => $tempRubeola->id ?? '',
-            'nama' => $tempRubeola->penyakit->nama ?? '',
+            'nama' => 'Campak Rubeola',
             'kepercayaan' => $this->rumus($rubeola),
         );
 
         $resultRubella = array(
-            'id' => $tempRubella->id ?? '',
-            'nama' => $tempRubella->penyakit->nama ?? '',
+            'nama' => 'Campak Rubella',
             'kepercayaan' => $this->rumus($rubella),
         );
 
