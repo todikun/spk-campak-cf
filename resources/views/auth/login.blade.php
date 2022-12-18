@@ -15,8 +15,9 @@
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-sign-in.html" />
 
-    <title>Sign In | Dinsos Pasaman</title>
+    <title>Sign In | SPK Diagnosa Campak</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link href="{{ asset('dist/css/app.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
@@ -29,34 +30,43 @@
                     <div class="d-table-cell align-middle">
 
                         <div class="text-center mt-4">
-                            <h1 class="h2">LOGISTIK DINSOS PASAMAN</h1>
+                            <h1 class="h2">SPK Diagnosa Campak</h1>
                         </div>
 
                         <div class="card">
                             <div class="card-body">
+
+                                @if (session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>{{session('error')}}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                                @endif
+
+                                @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    @foreach ($errors->all() as $error)
+                                    <strong>{{$error}}</strong>
+                                    @endforeach
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                                @endif
+
                                 <div class="m-sm-4">
-                                    <form>
+                                    <form action="{{route('login.process')}}" method="POST">
+                                        @csrf
+
                                         <div class="mb-3">
                                             <label class="form-label">Username</label>
                                             <input class="form-control form-control-lg" type="username" name="username"
-                                                placeholder="Enter your username" />
+                                                placeholder="Enter your username" required />
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Password</label>
                                             <input class="form-control form-control-lg" type="password" name="password"
-                                                placeholder="Enter your password" />
-                                            <small>
-                                                <a href="#">Forgot password?</a>
-                                            </small>
-                                        </div>
-                                        <div>
-                                            <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="remember-me"
-                                                    name="remember-me" checked>
-                                                <span class="form-check-label">
-                                                    Remember me next time
-                                                </span>
-                                            </label>
+                                                placeholder="Enter your password" required />
                                         </div>
                                         <div class="text-center mt-3">
                                             <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
