@@ -48,7 +48,7 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item['nama']}}</td>
-                                <td>{{$item['kepercayaan']}}%</td>
+                                <td>{{number_format($item['kepercayaan'], 2)}}%</td>
                                 <td>
 
                                     <a href="{{route('diagnosa.detail', ['id' => $item['id']])}}"
