@@ -59,7 +59,8 @@ class GejalaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $gejala = Gejala::find($id);
+        return view('pages.gejala.edit', compact('gejala'));
     }
 
     /**
@@ -71,7 +72,13 @@ class GejalaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+        ]);
+        
+        $gejala = Gejala::find($id);
+        $gejala->update($request->all());
+        return back()->with('success', 'Gejala Berhasil diupdate!');
     }
 
     /**

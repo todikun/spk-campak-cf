@@ -52,6 +52,33 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <tfoot>
+
+                            @if ($item['kepercayaan'] != 0)
+                            <td colspan="4" class="text-center">
+                                Kemungkinan anda terkena penyakit
+                                {{$keterangan[0]['nama']}} adalah
+                                {{number_format($keterangan[0]['kepercayaan'], 2)}}%
+                            </td>
+                            @endif
+                        </tfoot>
+
+
+                        <table class="table mt-2">
+                            <tr>
+                                <td width="70%"></td>
+                                <td>
+                                    <div>
+                                        <div>Kepala Puskesmas</div>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <div>Dr. Mela Aryati</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

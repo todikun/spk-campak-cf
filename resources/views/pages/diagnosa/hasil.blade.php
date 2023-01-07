@@ -61,6 +61,21 @@
                             @endif
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <td colspan="4" class="text-center">
+                                <h4>
+                                    @if (sizeof($keterangan) != 0)
+                                    Kemungkinan anda terkena penyakit
+                                    {{$keterangan[0]['nama']}} adalah
+                                    {{number_format($keterangan[0]['kepercayaan'], 2)}}%
+                                    @else
+                                    Kemungkinan anda terkena penyakit
+                                    {{$result[0]['nama']}} adalah
+                                    {{number_format($result[0]['kepercayaan'], 2)}}%
+                                    @endif
+                                </h4>
+                            </td>
+                        </tfoot>
                     </table>
                 </div>
             </div>

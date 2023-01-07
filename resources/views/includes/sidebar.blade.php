@@ -12,6 +12,8 @@
 				</a>
 			</li>
 
+			@if (Auth::user()->is_admin == true)
+
 			<li class="sidebar-header">
 				Master Data
 			</li>
@@ -35,6 +37,7 @@
 					<i class="align-middle " data-feather="bar-chart-2"></i> <span class="align-middle">Nilai CF</span>
 				</a>
 			</li>
+			@endif
 
 			<li class="sidebar-header">
 				Diagnosa

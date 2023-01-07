@@ -14,11 +14,23 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        User::insert([
-            'name' => 'Admin',
-            'username' => 'admin',
-            'password' => bcrypt('admin'),
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
+        $user = [
+            [
+                'name' => 'Admin',
+                'username' => 'admin',
+                'password' => bcrypt('admin'),
+                'created_at' => date('Y-m-d H:i:s'),
+                'is_admin' => true,
+            ],
+            [
+                'name' => 'User',
+                'username' => 'user',
+                'password' => bcrypt('user'),
+                'created_at' => date('Y-m-d H:i:s'),
+                'is_admin' => false,
+            ],
+        ];
+
+        User::insert($user);
     }
 }

@@ -96,7 +96,7 @@
             dataType: 'HTML',
             method: 'GET',
             success: function (result) {
-                $('#modal-form').find('#modal-label').html('Edit Nagari');
+                $('#modal-form').find('#modal-label').html('Edit Penyakit');
                 $('#modal-form').find('.modal-body').html(result);
                 $('#modal-form').modal('show');
             },
@@ -116,7 +116,7 @@
             dataType: 'HTML',
             method: 'GET',
             success: function (result) {
-                $('#modal-form').find('#modal-label').html('Add Nagari');
+                $('#modal-form').find('#modal-label').html('Add Penyakit');
                 $('#modal-form').find('.modal-body').html(result);
                 $('#modal-form').modal('show');
             },
@@ -136,7 +136,7 @@
             dataType: 'HTML',
             method: 'GET',
             success: function (result) {
-                $('#modal-form').find('#modal-label').html('Detail Nagari');
+                $('#modal-form').find('#modal-label').html('Detail Penyakit');
                 $('#modal-form').find('.modal-body').html(result);
                 $('#modal-form').modal('show');
             },

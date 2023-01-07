@@ -58,8 +58,41 @@ class DiagnosaController extends Controller
             $resultBayi, $resultRubeola, $resultRubella,
         );
 
-        return view('pages.diagnosa.hasil', compact('result'));
+        $keterangan = array();
+
+        if (sizeof($result) == 3) {
+            if ($result[0]['kepercayaan'] != 0 && $result[1]['kepercayaan'] != 0) {
+                if ($result[0]['kepercayaan'] > $result[1]['kepercayaan']) {
+                    $keterangan = [];
+                    array_push($keterangan, $result[0]);
+                } else if ($result[0]['kepercayaan'] < $result[1]['kepercayaan']) {
+                    $keterangan = [];
+                    array_push($keterangan, $result[1]);
+                }
+            }
+
+            if ($result[0]['kepercayaan'] != 0 && $result[2]['kepercayaan'] != 0) {
+                if ($result[0]['kepercayaan'] > $result[2]['kepercayaan']) {
+                    $keterangan = [];
+                    array_push($keterangan, $result[0]);
+                } else if ($result[0]['kepercayaan'] < $result[2]['kepercayaan']) {
+                    $keterangan = [];
+                    array_push($keterangan, $result[2]);
+                }
+            }
+            
         
+        if ($result[1]['kepercayaan'] != 0 && $result[2]['kepercayaan'] != 0) {
+            if ($result[1]['kepercayaan'] > $result[2]['kepercayaan']) {
+                $keterangan = [];
+                array_push($keterangan, $result[1]);
+            } else if ($result[1]['kepercayaan'] < $result[2]['kepercayaan']) {
+                $keterangan = [];
+                array_push($keterangan, $result[2]);
+            }
+        }
+        }
+        return view('pages.diagnosa.hasil', compact('result', 'keterangan'));
     }
 
     private function rumus(array $data)
@@ -114,7 +147,41 @@ class DiagnosaController extends Controller
     public function laporan()
     {
         $data = request()->get('data');
-        return view('pages.diagnosa.laporan', compact('data'));
+        $keterangan = array();
+
+        if (sizeof($data) == 3) {
+            if ($data[0]['kepercayaan'] != 0 && $data[1]['kepercayaan'] != 0) {
+                if ($data[0]['kepercayaan'] > $data[1]['kepercayaan']) {
+                    $keterangan = [];
+                    array_push($keterangan, $data[0]);
+                } else if ($data[0]['kepercayaan'] < $data[1]['kepercayaan']) {
+                    $keterangan = [];
+                    array_push($keterangan, $data[1]);
+                }
+            }
+
+            if ($data[0]['kepercayaan'] != 0 && $data[2]['kepercayaan'] != 0) {
+                if ($data[0]['kepercayaan'] > $data[2]['kepercayaan']) {
+                    $keterangan = [];
+                    array_push($keterangan, $data[0]);
+                } else if ($data[0]['kepercayaan'] < $data[2]['kepercayaan']) {
+                    $keterangan = [];
+                    array_push($keterangan, $data[2]);
+                }
+            }
+            
+        
+        if ($data[1]['kepercayaan'] != 0 && $data[2]['kepercayaan'] != 0) {
+            if ($data[1]['kepercayaan'] > $data[2]['kepercayaan']) {
+                $keterangan = [];
+                array_push($keterangan, $data[1]);
+            } else if ($data[1]['kepercayaan'] < $data[2]['kepercayaan']) {
+                $keterangan = [];
+                array_push($keterangan, $data[2]);
+            }
+        }
+        }
+        return view('pages.diagnosa.laporan', compact('data', 'keterangan'));
     }
 
 }
